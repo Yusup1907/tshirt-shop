@@ -3,6 +3,7 @@ package org.commerce.controller;
 import org.commerce.entity.Product;
 import org.commerce.exception.GeneralException;
 import org.commerce.model.product.ProductDTO;
+import org.commerce.model.product.ProductSizeDBDTO;
 import org.commerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class ProductController {
 
     @PostMapping("/new-product")
     public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO product) throws GeneralException {
-        var products = productService.createNewProduct(product);
+        ProductDTO products = productService.createNewProduct(product);
         log.info("User created:  " + products);
         return new ResponseEntity(products, HttpStatus.CREATED);
 

@@ -2,15 +2,17 @@ package org.commerce.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.commerce.entity.Product;
-import org.commerce.entity.User;
+import org.commerce.entity.Size;
 import org.commerce.exception.GeneralException;
 import org.commerce.model.product.ProductDTO;
+import org.commerce.model.product.ProductSizeDBDTO;
 import org.commerce.repository.ProductRepository;
+import org.commerce.repository.SizeRepository;
 import org.commerce.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,6 +22,9 @@ import java.util.UUID;
 public class ProductService {
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private SizeRepository sizeRepository;
 
 
 
@@ -45,9 +50,9 @@ public class ProductService {
             String idProduct = "OID" + StringUtil.setUUID();
             product.setId(idProduct);
             product.setName(request.getName());
-            product.setDesc(request.getDescription());
+            product.setDesc(request.getDesc());
             product.setPrice(request.getPrice());
-            product.setImg(request.getImage());
+            product.setImg(request.getImg());
 
             if (isNameProductAlreadyExists(request.getName()).isPresent()) {
                 log.error("Name Product already exists");
@@ -64,19 +69,19 @@ public class ProductService {
             productRepository.save(product);
             response.setStatusCode(201);
             response.setMessage("Add Product successfully");
-            response.setName(request.getName());
-            response.setDescription(request.getDescription());
-            response.setPrice(request.getPrice());
-            response.setImage(request.getImage());
-            
+            response.setName(product.getName());
+            response.setDesc(product.getDesc());
+            response.setPrice(product.getPrice());
+            response.setImg(product.getImg());
+
             return response;
             
         } catch (GeneralException e) {
-            log.error("rc : {} message system : {}  rm : {}", e.getStatusCode(), e.getMessage(), e.getGeneralMessage());
+            log.error("{} {} {}", e.getStatusCode(), e.getMessage(), e.getGeneralMessage());
             throw new GeneralException(e.getStatusCode(), e.getMessage(), e.getGeneralMessage());
 
         } catch (Exception e) {
-            log.error("Error creating user", e);
+            log.error("Error creating product", e);
             throw new GeneralException("500", null, "Internal server error");
         }
         
@@ -92,12 +97,33 @@ public class ProductService {
             return productRepository.findById(id).orElseThrow(() -> new GeneralException("404", null, "Product Not Found!"));
             
         } catch (GeneralException e) {
-            log.error("rc : {} message system : {}  rm : {}", e.getStatusCode(), e.getMessage(), e.getGeneralMessage());
+            log.error("{} {} {}", e.getStatusCode(), e.getMessage(), e.getGeneralMessage());
             throw new GeneralException(e.getStatusCode(), e.getMessage(), e.getGeneralMessage());
         } catch (Exception e) {
             log.error("Error during login", e.getMessage());
             throw new GeneralException("500", null, "Internal server error");
         }
-
     }
+
+//    public ProductSizeDBDTO updateProduct(ProductSizeDBDTO request) throws GeneralException {
+//
+//        try {
+//
+//            Product product = new Product();
+//            product.setName(request.getName());
+//            product.setDesc(request.getDesc());
+//            product.setImg(request.getImg());
+//
+//            return ProductSizeDBDTO.builder()
+//                    .name(request.getName())
+//                    .desc(request.getDesc())
+//                    .img(request.getImg())
+//                    .build();
+//
+//        } catch(){
+//
+//        }
+//    }
+
+
 }
