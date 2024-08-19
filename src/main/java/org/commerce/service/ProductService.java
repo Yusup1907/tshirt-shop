@@ -145,7 +145,7 @@ public class ProductService {
         log.error("Error updating product", e);
         throw new GeneralException("500", null, "Internal server error");
     }
-}
+    }
 
 
 }

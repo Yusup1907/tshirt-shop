@@ -134,7 +134,7 @@ public class SizeService {
             sizeRepository.save(existingSize);
 
             SizeRDTO response = new SizeRDTO();
-            response.setStatusCode(201);
+            response.setStatusCode(200);
             response.setMessage("Updated size and stock successfully!");
             response.setSize(request.getSize());
             response.setStock(request.getStock());

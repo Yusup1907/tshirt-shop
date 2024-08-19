@@ -31,4 +31,18 @@ public class OrderController {
 
         return new ResponseEntity(orders, HttpStatus.OK);
     }
+
+    @GetMapping("/order")
+    public ResponseEntity<Object> getAllOrder() {
+        Object order = orderService.getAllOrder();
+        return new ResponseEntity(order, HttpStatus.OK);
+    }
+
+    @PutMapping("/order-updated/{id}")
+    public ResponseEntity<OrderDTO> updateOrder(@RequestBody OrderDTO request, @PathVariable String id) throws GeneralException {
+        OrderRDTO order = orderService.updateOrder(request, id);
+        log.info("Update Order successfully!");
+
+        return new ResponseEntity(order, HttpStatus.OK);
+    }
 }

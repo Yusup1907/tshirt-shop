@@ -55,6 +55,6 @@ public class SizeController {
     public ResponseEntity<SizeRDTO> updateSize(@RequestBody SizeDTO size, @PathVariable String id) throws GeneralException {
         SizeRDTO sizeRDTO = sizeService.updateSize(size, id);
         log.info("Size created:  " + sizeRDTO);
-        return new ResponseEntity(sizeRDTO, HttpStatus.CREATED);
+        return new ResponseEntity(sizeRDTO, HttpStatus.OK);
     }
 }

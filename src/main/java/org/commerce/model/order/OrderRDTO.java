@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 public class OrderRDTO {
     private int StatusCode;
     private String Message;
-    private String sizeId;
+    private String productId;
     private String userId;
     private Timestamp orderDate;
 }

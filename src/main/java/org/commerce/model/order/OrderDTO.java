@@ -11,6 +11,6 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class OrderDTO {
     private String userId;
-    private String sizeId;
+    private String productId;
     private Timestamp orderDate;
 }
