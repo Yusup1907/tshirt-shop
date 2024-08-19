@@ -20,9 +20,9 @@ public class SizeController {
     @Autowired
     private SizeService sizeService;
 
-    @PostMapping("/new/size/{id}")
-    public ResponseEntity<SizeRDTO> createSize(@RequestBody SizeDTO size, @PathVariable String id) throws GeneralException {
-        SizeRDTO sizeRDTO = sizeService.createSize(size, id);
+    @PostMapping("/new/size")
+    public ResponseEntity<SizeRDTO> createSize(@RequestBody SizeDTO size) throws GeneralException {
+        SizeRDTO sizeRDTO = sizeService.createSize(size);
         log.info("Size created:  " + sizeRDTO);
         return new ResponseEntity(sizeRDTO, HttpStatus.CREATED);
     }
@@ -35,11 +35,26 @@ public class SizeController {
         return new ResponseEntity(productSizeDTOS, HttpStatus.OK);
     }
 
-    @GetMapping("size/{id}")
+    @GetMapping("/size/{id}")
     public ResponseEntity<Object> sizeById(@PathVariable String id) throws GeneralException {
         Object productSizeDTOS = sizeService.sizeProductById(id);
         log.info("Get Product Size By Id: " + id);
 
         return new ResponseEntity(productSizeDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("/size")
+    public ResponseEntity<Object> getAllSize() {
+        Object size = sizeService.getAllSize();
+        log.info("Get All Size");
+
+        return new ResponseEntity(size, HttpStatus.OK);
+    }
+
+    @PutMapping("/size-updated/{id}")
+    public ResponseEntity<SizeRDTO> updateSize(@RequestBody SizeDTO size, @PathVariable String id) throws GeneralException {
+        SizeRDTO sizeRDTO = sizeService.updateSize(size, id);
+        log.info("Size created:  " + sizeRDTO);
+        return new ResponseEntity(sizeRDTO, HttpStatus.CREATED);
     }
 }

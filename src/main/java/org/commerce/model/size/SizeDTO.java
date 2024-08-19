@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class SizeDTO {
+    private String productId;
     private String size;
     private int stock;
 }

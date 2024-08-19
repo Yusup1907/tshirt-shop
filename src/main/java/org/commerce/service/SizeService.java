@@ -32,15 +32,15 @@ public class SizeService {
         return StringUtils.hasText(productId);
     }
 
-    public SizeRDTO createSize(SizeDTO request, String id) throws GeneralException {
+    public SizeRDTO createSize(SizeDTO request) throws GeneralException {
         SizeRDTO response = new SizeRDTO();
         try {
             Size size = new Size();
             String idSize = "OID" + StringUtil.setUUID();
             size.setId(idSize);
-            Product product = productRepository.findById(id)
-                    .orElseThrow(() -> new GeneralException("404", null, "Product not found for id: " + id));
-            size.setProductId(id);
+            Product product = productRepository.findById(request.getProductId())
+                    .orElseThrow(() -> new GeneralException("404", null, "Product not found for id: " + request.getProductId()));
+            size.setProductId(product.getId());
             size.setSize(request.getSize());
             size.setStock(request.getStock());
 
@@ -84,7 +84,7 @@ public class SizeService {
             throw new GeneralException(e.getStatusCode(), e.getMessage(), e.getGeneralMessage());
 
         } catch (Exception e) {
-            log.error("Error creating size and stock", e);
+            log.error("Error product size and product and stock", e);
             throw new GeneralException("500", null, "Internal server error");
         }
 
@@ -111,10 +111,45 @@ public class SizeService {
             throw new GeneralException(e.getStatusCode(), e.getMessage(), e.getGeneralMessage());
 
         } catch (Exception e) {
-            log.error("Error creating size and stock", e);
+            log.error("Error size by id", e);
             throw new GeneralException("500", null, "Internal server error");
         }
 
+    }
+
+    public List<Size> getAllSize() {
+        return sizeRepository.findAll();
+    }
+
+    public SizeRDTO updateSize(SizeDTO request, String id) throws GeneralException {
+        try {
+            Size existingSize = sizeRepository.findById(id)
+                    .orElseThrow(() -> new GeneralException("404", null, "Size Not Found!"));
+            Product product = productRepository.findById(request.getProductId())
+                    .orElseThrow(() -> new GeneralException("404", null, "Product not found for id: " + request.getProductId()));
+            existingSize.setProductId(product.getId());
+            existingSize.setSize(request.getSize());
+            existingSize.setStock(request.getStock());
+
+            sizeRepository.save(existingSize);
+
+            SizeRDTO response = new SizeRDTO();
+            response.setStatusCode(201);
+            response.setMessage("Updated size and stock successfully!");
+            response.setSize(request.getSize());
+            response.setStock(request.getStock());
+
+            return response;
+
+
+        } catch (GeneralException e) {
+            log.error("{} {} {}", e.getStatusCode(), e.getMessage(), e.getGeneralMessage());
+            throw new GeneralException(e.getStatusCode(), e.getMessage(), e.getGeneralMessage());
+
+        } catch (Exception e) {
+            log.error("Error updated size and stock", e);
+            throw new GeneralException("500", null, "Internal server error");
+        }
     }
 
 
