@@ -31,4 +31,8 @@ public interface SizeRepository extends JpaRepository<Size, String> {
     List<ProductSizeDTO> findProductSizesByProductId(@Param("id") String id);
 
 
+    @Query("SELECT new org.commerce.model.size.ProductSizeDTO(p.id, p.name, p.desc, p.price, p.img, s.size, s.stock) FROM Product p JOIN Size s ON s.productId = p.id WHERE s.id = :id")
+    List<ProductSizeDTO> findSizesById(@Param("id") String id);
+
+
 }

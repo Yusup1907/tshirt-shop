@@ -45,10 +45,10 @@ public class InquiryService {
 
     private int updateStockSizeByIdAndSize(InquiryRQDTO req) {
         try {
-            Size findSize = sizeRepository.findByIdProductAndBySize(req.getProductId(), req.getSize()).orElse(null);
+            Size findSize = sizeRepository.findByIdProductAndBySize(req.getSizeId(), req.getSize()).orElse(null);
             if (findSize != null) {
                 int newStock = findSize.getStock() - req.getQuantity();
-                int result = sizeRepository.updateStockSizeByIdAndSize(req.getProductId(), req.getSize(), newStock);
+                int result = sizeRepository.updateStockSizeByIdAndSize(req.getSizeId(), req.getSize(), newStock);
                 if (result <= 0) {
                     return 0;
                 }
@@ -83,26 +83,26 @@ public class InquiryService {
         return productAndSizeById;
     }
 
-    public InquiryRSDTO inquiry(InquiryRQDTO req) throws ProductException {
-        String idOrder = "OID" + StringUtil.setUUID();
-        Timestamp orderDate = StringUtil.getAsTimestamp();
-        Order order = new Order();
-        order.setId(idOrder);
-        order.setUserId(req.getUserId());
-        order.setProductId(req.getProductId());
-        order.setOrderDate(orderDate);
-        order.setQuantity(req.getQuantity());
-        order.setAmount(req.getAmount());
-        Order add = addOrder(order);
-        if (add == null) {
-            log.warn("failed add order");
-            throw new ProductException("01", null, "Database Error");
-        }
-        int update = updateStockSizeByIdAndSize(req);
-        if (update <= 0) {
-            log.warn("failed updated size");
-            throw new ProductException("01", null, "Database Error");
-        }
-        return new InquiryRSDTO(idOrder, orderDate, order.getAmount());
-    }
+//    public InquiryRSDTO inquiry(InquiryRQDTO req) throws ProductException {
+//        String idOrder = "OID" + StringUtil.setUUID();
+//        Timestamp orderDate = StringUtil.getAsTimestamp();
+//        Order order = new Order();
+//        order.setId(idOrder);
+//        order.setUserId(req.getUserId());
+//        order.setSizeId(req.getSizeId());
+//        order.setOrderDate(orderDate);
+//        order.setQuantity(req.getQuantity());
+//        order.setAmount(req.getAmount());
+//        Order add = addOrder(order);
+//        if (add == null) {
+//            log.warn("failed add order");
+//            throw new ProductException("01", null, "Database Error");
+//        }
+//        int update = updateStockSizeByIdAndSize(req);
+//        if (update <= 0) {
+//            log.warn("failed updated size");
+//            throw new ProductException("01", null, "Database Error");
+//        }
+//        return new InquiryRSDTO(idOrder, orderDate, order.getAmount());
+//    }
 }

@@ -11,6 +11,7 @@ import org.commerce.model.user.UserRegisterDTO;
 import org.commerce.model.user.UserRegisterRDTO;
 import org.commerce.repository.UserRepository;
 import org.commerce.util.JwtUtils;
+import org.commerce.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -70,7 +71,8 @@ public class AuthService {
         UserRegisterRDTO response = new UserRegisterRDTO();
         try {
             User user = new User();
-            user.setId(UUID.randomUUID());
+            String idUser = "OID" + StringUtil.setUUID();
+            user.setId(idUser);
             user.setUsername(request.getUsername());
             user.setFirstName(request.getFirstName());
             user.setLastName(request.getLastName());

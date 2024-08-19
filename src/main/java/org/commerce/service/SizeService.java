@@ -10,6 +10,7 @@ import org.commerce.model.size.SizeDTO;
 import org.commerce.model.size.SizeRDTO;
 import org.commerce.repository.ProductRepository;
 import org.commerce.repository.SizeRepository;
+import org.commerce.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -35,6 +36,8 @@ public class SizeService {
         SizeRDTO response = new SizeRDTO();
         try {
             Size size = new Size();
+            String idSize = "OID" + StringUtil.setUUID();
+            size.setId(idSize);
             Product product = productRepository.findById(id)
                     .orElseThrow(() -> new GeneralException("404", null, "Product not found for id: " + id));
             size.setProductId(id);
@@ -43,6 +46,7 @@ public class SizeService {
 
             sizeRepository.save(size);
             response.setStatusCode(201);
+            response.setMessage("Add size and stock successfully!");
             response.setSize(request.getSize());
             response.setStock(request.getStock());
 
@@ -65,12 +69,40 @@ public class SizeService {
 
             Optional<Product> product = productRepository.findById(productId);
             if (product.isEmpty()) {
-                throw new GeneralException("404", null, "Product Not FOUND fo Produtct ID: " + productId);
+                throw new GeneralException("404", null, "Product Not FOUND for Produtct ID: " + productId);
             }
             List<ProductSizeDTO> productSizes = sizeRepository.findProductSizesByProductId(productId);
             if (productSizes.isEmpty()) {
                 return product;
             }
+
+
+            return productSizes;
+
+        } catch (GeneralException e) {
+            log.error("{} {} {}", e.getStatusCode(), e.getMessage(), e.getGeneralMessage());
+            throw new GeneralException(e.getStatusCode(), e.getMessage(), e.getGeneralMessage());
+
+        } catch (Exception e) {
+            log.error("Error creating size and stock", e);
+            throw new GeneralException("500", null, "Internal server error");
+        }
+
+    }
+
+
+    public Object sizeProductById(String sizeId) throws GeneralException {
+        try {
+            if (!isValidProductId(sizeId)) {
+                throw new GeneralException("400", null, "Invalid size ID");
+            }
+
+
+            List<ProductSizeDTO> productSizes = sizeRepository.findSizesById(sizeId);
+            if (productSizes.isEmpty()) {
+                throw new GeneralException("404", null, "Size not  Found");
+            }
+
 
             return productSizes;
 

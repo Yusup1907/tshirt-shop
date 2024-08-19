@@ -105,25 +105,47 @@ public class ProductService {
         }
     }
 
-//    public ProductSizeDBDTO updateProduct(ProductSizeDBDTO request) throws GeneralException {
-//
-//        try {
-//
-//            Product product = new Product();
-//            product.setName(request.getName());
-//            product.setDesc(request.getDesc());
-//            product.setImg(request.getImg());
-//
-//            return ProductSizeDBDTO.builder()
-//                    .name(request.getName())
-//                    .desc(request.getDesc())
-//                    .img(request.getImg())
-//                    .build();
-//
-//        } catch(){
-//
-//        }
-//    }
+    public ProductDTO updateProduct(ProductDTO request, String id) throws GeneralException {
+    try {
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new GeneralException("404", null, "Product Not Found!"));
+
+        if (!existingProduct.getName().equals(request.getName()) && isNameProductAlreadyExists(request.getName()).isPresent()) {
+            log.error("Name Product already exists");
+            throw new GeneralException("400", null, "Name Product already exists");
+        }
+
+        existingProduct.setName(request.getName());
+        existingProduct.setDesc(request.getDesc());
+        existingProduct.setPrice(request.getPrice());
+        existingProduct.setImg(request.getImg());
+
+        if(!isValidProduct(existingProduct)) {
+            log.error("Invalid product data: " + existingProduct);
+            throw new GeneralException("400", null, "Invalid product data!");
+        }
+
+        productRepository.save(existingProduct);
+
+        ProductDTO response = new ProductDTO();
+        response.setStatusCode(201);
+        response.setMessage("Product updated successfully");
+        response.setName(existingProduct.getName());
+        response.setDesc(existingProduct.getDesc());
+        response.setPrice(existingProduct.getPrice());
+        response.setImg(existingProduct.getImg());
+
+        return response;
+
+    } catch (GeneralException e) {
+        log.error("{} {} {}", e.getStatusCode(), e.getMessage(), e.getGeneralMessage());
+        throw new GeneralException(e.getStatusCode(), e.getMessage(), e.getGeneralMessage());
+
+    } catch (Exception e) {
+        log.error("Error updating product", e);
+        throw new GeneralException("500", null, "Internal server error");
+    }
+}
 
 
 }

@@ -22,9 +22,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_user", nullable = false)
-    private UUID id;
+    private String id;
     @Column(name = "first_name", nullable = false, columnDefinition = "VARCHAR(100)", length = 100)
     private String firstName;
     @Column(name = "last_name", nullable = false, columnDefinition = "VARCHAR(100)", length = 100)

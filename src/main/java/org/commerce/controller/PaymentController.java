@@ -24,9 +24,9 @@ public class PaymentController {
         return ResponseEntity.ok(products);
     }
 
-    @PostMapping(path = "/inquiry")
-    public ResponseEntity<Object> getProductAndSizeById(@RequestBody InquiryRQDTO inquiryRQDTO) throws ProductException {
-        InquiryRSDTO inquiry = inquiryService.inquiry(inquiryRQDTO);
-        return ResponseEntity.ok(inquiry);
-    }
+//    @PostMapping(path = "/inquiry")
+//    public ResponseEntity<Object> getProductAndSizeById(@RequestBody InquiryRQDTO inquiryRQDTO) throws ProductException {
+//        InquiryRSDTO inquiry = inquiryService.inquiry(inquiryRQDTO);
+//        return ResponseEntity.ok(inquiry);
+//    }
 }

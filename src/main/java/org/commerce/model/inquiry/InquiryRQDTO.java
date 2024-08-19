@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class InquiryRQDTO {
-    private String productId;
+    private String sizeId;
     private String userId;
     private String size;
     private int quantity;
