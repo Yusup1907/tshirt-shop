@@ -33,7 +33,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(request -> request.requestMatchers("/api/v1/register").permitAll()
-                        .requestMatchers("/api/v1/login", "/api/v1/refreshToken", "/api/v1/inquiry", "/api/v1/new-product", "/api/v1/product", "/api/v1/product/{id}", "/api/v1/new/size", "/api/v1/size-updated/{id}", "/api/v1/product-size/{id}",  "/api/v1/size", "/api/v1/new-order", "/api/v1/order/{id}", "/api/v1/order-updated/{id}", "/api/v1/order", "/api/v1/size/{id}", "/api/v1/product-update/{id}").permitAll()
+                        .requestMatchers("/api/v1/login", "/api/v1/refreshToken", "/api/v1/inquiry", "/api/v1/new-product", "/api/v1/product", "/api/v1/product/{id}", "/api/v1/new/size", "/api/v1/size-updated/{id}", "/api/v1/product-size/{id}",  "/api/v1/size", "/api/v1/new-order", "/api/v1/order/{id}", "/api/v1/order-updated/{id}", "/api/v1/order", "/api/v1/size/{id}", "/api/v1/product-update/{id}", "/api/v1/add-cart",  "/api/v1/cart").permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/user/**").hasAnyAuthority("USER")
                         .requestMatchers("/adminuser/**").hasAnyAuthority("ADMIN", "USER")

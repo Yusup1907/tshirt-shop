@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 public class ProductSizeDTO {
+    private String id;
     private String productId;
     private String name;
     private String desc;

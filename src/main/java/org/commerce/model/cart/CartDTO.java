@@ -11,6 +11,6 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class CartDTO {
     private String idCart;
-    private String productId;
+    private String sizeId;
     private String userId;
 }

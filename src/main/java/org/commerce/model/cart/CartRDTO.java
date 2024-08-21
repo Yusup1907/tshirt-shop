@@ -1,4 +1,4 @@
-package org.commerce.model.product;
+package org.commerce.model.cart;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,12 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductDTO {
+public class CartRDTO {
     private int statusCode;
     private String message;
-    private String name;
-    private String desc;
-    private double price;
-    private String img;
-    
+    private String idCart;
+    private String sizeId;
+    private String userId;
 }

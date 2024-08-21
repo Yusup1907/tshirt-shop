@@ -1,13 +1,8 @@
 package org.commerce.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -17,8 +12,12 @@ public class Cart {
     @Id
     @Column(name = "id_cart", nullable = false, columnDefinition = "VARCHAR(100)", length = 100)
     private String id;
-    @Column(name = "product_id", nullable = false, columnDefinition = "VARCHAR(100)", length = 100)
-    private String productId;
-    @Column(name = "user_id", nullable = false, columnDefinition = "VARCHAR(100)", length = 100)
-    private String userId;
+    @ManyToOne
+    @JoinColumn(name = "size_id", nullable = false)
+    private Size sizeId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User userId;
+
 }

@@ -40,7 +40,7 @@ public class SizeService {
             size.setId(idSize);
             Product product = productRepository.findById(request.getProductId())
                     .orElseThrow(() -> new GeneralException("404", null, "Product not found for id: " + request.getProductId()));
-            size.setProductId(product.getId());
+            size.setProductId(product);
             size.setSize(request.getSize());
             size.setStock(request.getStock());
 
@@ -127,7 +127,7 @@ public class SizeService {
                     .orElseThrow(() -> new GeneralException("404", null, "Size Not Found!"));
             Product product = productRepository.findById(request.getProductId())
                     .orElseThrow(() -> new GeneralException("404", null, "Product not found for id: " + request.getProductId()));
-            existingSize.setProductId(product.getId());
+            existingSize.setProductId(product);
             existingSize.setSize(request.getSize());
             existingSize.setStock(request.getStock());
 

@@ -1,11 +1,10 @@
 package org.commerce.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,8 +20,11 @@ public class Product {
     @Column(name = "description", nullable = false, columnDefinition = "VARCHAR(100)", length = 100)
     private String desc;
     @Column(name = "price", nullable = false, columnDefinition = "INTEGER")
-    private int price;
+    private double price;
     @Column(name = "image", nullable = false, columnDefinition = "VARCHAR(100)", length = 100)
     private String img;
+
+    @OneToMany(mappedBy = "productId")
+    private List<Size> size;
 
 }
