@@ -61,35 +61,6 @@ public class SizeService {
         }
     }
 
-    public Object productSizeById(String productId) throws GeneralException {
-        try {
-            if (!isValidProductId(productId)) {
-                throw new GeneralException("400", null, "Invalid product ID");
-            }
-
-            Optional<Product> product = productRepository.findById(productId);
-            if (product.isEmpty()) {
-                throw new GeneralException("404", null, "Product Not FOUND for Produtct ID: " + productId);
-            }
-            List<ProductSizeDTO> productSizes = sizeRepository.findProductSizesByProductId(productId);
-            if (productSizes.isEmpty()) {
-                return product;
-            }
-
-
-            return productSizes;
-
-        } catch (GeneralException e) {
-            log.error("{} {} {}", e.getStatusCode(), e.getMessage(), e.getGeneralMessage());
-            throw new GeneralException(e.getStatusCode(), e.getMessage(), e.getGeneralMessage());
-
-        } catch (Exception e) {
-            log.error("Error product size and product and stock", e);
-            throw new GeneralException("500", null, "Internal server error");
-        }
-
-    }
-
 
     public Object sizeProductById(String sizeId) throws GeneralException {
         try {
@@ -98,7 +69,7 @@ public class SizeService {
             }
 
 
-            List<ProductSizeDTO> productSizes = sizeRepository.findSizesById(sizeId);
+            Optional<Size> productSizes = sizeRepository.findById(sizeId);
             if (productSizes.isEmpty()) {
                 throw new GeneralException("404", null, "Size not  Found");
             }

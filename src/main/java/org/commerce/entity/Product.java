@@ -1,10 +1,12 @@
 package org.commerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -25,6 +27,6 @@ public class Product {
     private String img;
 
     @OneToMany(mappedBy = "productId")
-    private List<Size> size;
+    private Set<Size> sizes;
 
 }

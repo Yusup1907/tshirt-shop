@@ -32,56 +32,56 @@ public class InquiryService {
         this.orderRepository = orderRepository;
     }
 
-    private List<ProductSizeDBDTO> findProductAndSizeById(String productId) {
-        try {
-            return productRepository.findProductAndSizeById(productId);
-        } catch (Exception e) {
-            log.warn("error : {}", e.getMessage());
-        } finally {
-            log.info("executed getProductAndSizeById");
-        }
-        return Collections.emptyList();
-    }
+//    private List<ProductSizeDBDTO> findProductAndSizeById(String productId) {
+//        try {
+//            return productRepository.findByProductId(productId);
+//        } catch (Exception e) {
+//            log.warn("error : {}", e.getMessage());
+//        } finally {
+//            log.info("executed getProductAndSizeById");
+//        }
+//        return Collections.emptyList();
+//    }
 
-    private int updateStockSizeByIdAndSize(InquiryRQDTO req) {
-        try {
-            Size findSize = sizeRepository.findByIdProductAndBySize(req.getSizeId(), req.getSize()).orElse(null);
-            if (findSize != null) {
-                int newStock = findSize.getStock() - req.getQuantity();
-                int result = sizeRepository.updateStockSizeByIdAndSize(req.getSizeId(), req.getSize(), newStock);
-                if (result <= 0) {
-                    return 0;
-                }
-                return result;
-            }
-            return 0;
-        } catch (Exception e) {
-            log.warn("error : {}", e.getMessage());
-        } finally {
-            log.info("executed updateStockSizeByIdAndSize");
-        }
-        return 0;
-    }
-
-    private Order addOrder(Order order) {
-        try {
-            return orderRepository.save(order);
-        } catch (Exception e) {
-            log.warn("error : {}", e.getMessage());
-        } finally {
-            log.info("executed addOrder");
-        }
-        return null;
-    }
-
-    public Object inquiryGetProduct(String productId) throws ProductException {
-        List<ProductSizeDBDTO> productAndSizeById = findProductAndSizeById(productId);
-        if (productAndSizeById.size() <= 0) {
-            log.warn("product not found");
-            throw new ProductException("01", null, "Product Not Found");
-        }
-        return productAndSizeById;
-    }
+//    private int updateStockSizeByIdAndSize(InquiryRQDTO req) {
+//        try {
+//            Size findSize = sizeRepository.findByProductId_IdAndSize(req.getSizeId(), req.getSize()).orElse(null);
+//            if (findSize != null) {
+//                int newStock = findSize.getStock() - req.getQuantity();
+//                int result = sizeRepository.updateStockByProductIdAndSize(req.getSizeId(), req.getSize(), newStock);
+//                if (result <= 0) {
+//                    return 0;
+//                }
+//                return result;
+//            }
+//            return 0;
+//        } catch (Exception e) {
+//            log.warn("error : {}", e.getMessage());
+//        } finally {
+//            log.info("executed updateStockSizeByIdAndSize");
+//        }
+//        return 0;
+//    }
+//
+//    private Order addOrder(Order order) {
+//        try {
+//            return orderRepository.save(order);
+//        } catch (Exception e) {
+//            log.warn("error : {}", e.getMessage());
+//        } finally {
+//            log.info("executed addOrder");
+//        }
+//        return null;
+//    }
+//
+//    public Object inquiryGetProduct(String productId) throws ProductException {
+//        List<ProductSizeDBDTO> productAndSizeById = findProductAndSizeById(productId);
+//        if (productAndSizeById.size() <= 0) {
+//            log.warn("product not found");
+//            throw new ProductException("01", null, "Product Not Found");
+//        }
+//        return productAndSizeById;
+//    }
 
 //    public InquiryRSDTO inquiry(InquiryRQDTO req) throws ProductException {
 //        String idOrder = "OID" + StringUtil.setUUID();

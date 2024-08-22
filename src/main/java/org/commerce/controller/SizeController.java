@@ -27,14 +27,6 @@ public class SizeController {
         return new ResponseEntity(sizeRDTO, HttpStatus.CREATED);
     }
 
-    @GetMapping("product-size/{id}")
-    public ResponseEntity<Object> productSizeById(@PathVariable String id) throws GeneralException {
-        Object productSizeDTOS = sizeService.productSizeById(id);
-        log.info("Get Product Size By Id: " + id);
-
-        return new ResponseEntity(productSizeDTOS, HttpStatus.OK);
-    }
-
     @GetMapping("/size/{id}")
     public ResponseEntity<Object> sizeById(@PathVariable String id) throws GeneralException {
         Object productSizeDTOS = sizeService.sizeProductById(id);

@@ -25,9 +25,9 @@ public class CartController {
         return new ResponseEntity(cartDTO, HttpStatus.OK);
     }
 
-//    @GetMapping("/cart")
-//    public ResponseEntity<Object> getAllCart() {
-//        Object cart = cartService.getAlCart();
-//        return new ResponseEntity(cart, HttpStatus.OK);
-//    }
+    @GetMapping("/cart")
+    public ResponseEntity<Object> getAllCart() {
+        Object cart = cartService.getAllCart();
+        return new ResponseEntity(cart, HttpStatus.OK);
+    }
 }

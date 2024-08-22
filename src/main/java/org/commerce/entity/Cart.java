@@ -1,8 +1,14 @@
 package org.commerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -12,12 +18,19 @@ public class Cart {
     @Id
     @Column(name = "id_cart", nullable = false, columnDefinition = "VARCHAR(100)", length = 100)
     private String id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "size_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Size sizeId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private User userId;
+
+//    private List<User> user;
+//    private List<Size> size;
 
 }

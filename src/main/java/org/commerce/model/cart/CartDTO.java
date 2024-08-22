@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartDTO {
-    private String idCart;
+    private String id;
     private String sizeId;
     private String userId;
 }
