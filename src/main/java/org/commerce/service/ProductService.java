@@ -2,10 +2,8 @@ package org.commerce.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.commerce.entity.Product;
-import org.commerce.entity.Size;
 import org.commerce.exception.GeneralException;
 import org.commerce.model.product.ProductDTO;
-import org.commerce.model.product.ProductSizeDBDTO;
 import org.commerce.repository.ProductRepository;
 import org.commerce.repository.SizeRepository;
 import org.commerce.util.StringUtil;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @Slf4j

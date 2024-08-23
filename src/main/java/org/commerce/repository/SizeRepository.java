@@ -43,6 +43,5 @@ public interface SizeRepository extends JpaRepository<Size, String> {
     Optional<Size> findById(@Param("id") String id);
 
 
-
-
+//    Optional<Object> findById(Size sizeId);
 }

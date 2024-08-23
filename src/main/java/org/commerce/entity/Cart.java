@@ -7,8 +7,8 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.List;
 import java.util.Set;
+
 
 @Getter
 @Setter
@@ -30,7 +30,7 @@ public class Cart {
     @JsonIgnore
     private User userId;
 
-//    private List<User> user;
-//    private List<Size> size;
+    @OneToMany(mappedBy = "cartId")
+    private Set<CartDetail> carts;
 
 }
